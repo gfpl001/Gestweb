@@ -1,0 +1,582 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
+<head>
+<title>Serveur Web Debian « debian-www » - IDEALOGEEK</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="Serveur Web Debian « debian-www » - IDEALOGEEK"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="04/07/2013"/>
+<meta name="author" content="Julien HOMMET - HTTP://IDEALOGEEK.FR/\\Contact : julien@idealogeek.fr"/>
+<meta name="description" content="Documentation relative à la configuration, l'utilisation du serveur web Debian, fourni par IDEALOGEEK."/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
+  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
+  .center {margin-left:auto; margin-right:auto; text-align:center;}
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top;  }
+  th.right  { text-align:center;  }
+  th.left   { text-align:center;   }
+  th.center { text-align:center; }
+  td.right  { text-align:right;  }
+  td.left   { text-align:left;   }
+  td.center { text-align:center; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  div.inlinetask {
+    padding:10px;
+    border:2px solid gray;
+    margin:10px;
+    background: #ffffcc;
+  }
+  textarea { overflow-x: auto; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+
+<div id="preamble">
+
+</div>
+
+<div id="content">
+<h1 class="title">Serveur Web Debian « debian-www » - IDEALOGEEK</h1>
+
+
+<div id="table-of-contents">
+<h2>Sommaire</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 Utilisation de la machine virtuelle</a>
+<ul>
+<li><a href="#sec-1-1">1.1 VirtualBox 4.2.16</a></li>
+<li><a href="#sec-1-2">1.2 VMWare Player 5.0.2</a></li>
+</ul>
+</li>
+<li><a href="#sec-2">2 Installation</a>
+<ul>
+<li><a href="#sec-2-1">2.1 Informations vis-à-vis de l'installation effectuée</a></li>
+<li><a href="#sec-2-2">2.2 Partitionnement du disque dur (virtuel)</a></li>
+</ul>
+</li>
+<li><a href="#sec-3">3 Comptes utilisateurs</a>
+<ul>
+<li><a href="#sec-3-1">3.1 Compte « root »</a></li>
+<li><a href="#sec-3-2">3.2 Précisions concernant l'utilisation de « root »</a></li>
+<li><a href="#sec-3-3">3.3 Paquets et logiciels installés</a>
+<ul>
+<li><a href="#sec-3-3-1">3.3.1 Utilitaires systèmes</a></li>
+<li><a href="#sec-3-3-2">3.3.2 Paquets pour le serveur web</a></li>
+</ul></li>
+</ul>
+</li>
+<li><a href="#sec-4">4 Modifications effectuées</a></li>
+<li><a href="#sec-5">5 Assistance</a>
+<ul>
+<li><a href="#sec-5-1">5.1 Assistance « IDEALO-Perso »</a></li>
+<li><a href="#sec-5-2">5.2 Assistance « IDEALO-Technik »</a></li>
+</ul>
+</li>
+<li><a href="#sec-6">6 Informations complémentaires</a>
+<ul>
+<li><a href="#sec-6-1">6.1 Accessibilité sur le réseau</a></li>
+<li><a href="#sec-6-2">6.2 Me contacter</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Utilisation de la machine virtuelle</h2>
+<div class="outline-text-2" id="text-1">
+
+
+</div>
+
+<div id="outline-container-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> VirtualBox 4.2.16</h3>
+<div class="outline-text-3" id="text-1-1">
+
+<p>Le fichier contenu  dans cette archive est au format  .OVA : il s'agit
+d'une machine virtuelle  prête à l'emploi en un seul  et unique clic !
+Avant de  l'utiliser, vous  devez extraire le  fichier .OVA  sur votre
+ordinateur,  à  l'emplacement  que  vous souhaitez.  L'endroit  où  se
+trouve le  fichier n'a  que peu d'importance  sur l'utilisation  de la
+machine virtuelle.
+</p>
+<p>
+Pour   lancer   la   machine    virtuelle,   double-cliquez   sur   le
+fichier.OVA.  VirtualBox   va  lire  le  fichier,   et  vous  proposer
+d'importer une « appliance », un modèle.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> VMWare Player 5.0.2</h3>
+<div class="outline-text-3" id="text-1-2">
+
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Installation</h2>
+<div class="outline-text-2" id="text-2">
+
+
+</div>
+
+<div id="outline-container-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> Informations vis-à-vis de l'installation effectuée</h3>
+<div class="outline-text-3" id="text-2-1">
+
+<p>Le serveur Debian  a été installé en <b>version 7.1.0  Stable</b>, à partir
+d'une  image  .iso  <i>netinst</i>  téléchargée  directement  sur  le  site
+officiel de  Debian.  Au 09/07/2013,  le serveur dispose  des derniers
+paquets  disponibles dans  leur dernières  versions proposées  par les
+dépôts de paquets.
+</p>
+<p>
+Aucuns paquets optionnels n'ont été  ajoutés lors de l'installation du
+serveur. En  effet, les  paquets complémentaires installés  (voir plus
+bas dans  la documentation) ont été  ajoutés à la main,  et configurés
+par défaut pour une utilisation basique et simple.
+<br/>
+</p>
+<p>
+Il est possible d'ajouter de  nouvelles fonctionnalités et de nouveaux
+paquets spécifiques  selon vos besoins  ; la rubrique  <b>Assistance</b> de
+cette documentation vous apportera des informations complémentaires.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> Partitionnement du disque dur (virtuel)</h3>
+<div class="outline-text-3" id="text-2-2">
+
+<p>Plusieurs partitions  ont été créées  pour que la machine  puisse être
+la plus modulaire possible. Voici le schéma de partition retenu :
+</p><ul>
+<li>« /boot » : 100 Mo | Partition <span style="text-decoration:underline;">primaire</span> et <b>bootable</b> ;
+</li>
+<li>« / » (système) : 2 Go | Partition <span style="text-decoration:underline;">logique</span> ;
+</li>
+<li>« /home » (Dossiers utilisateurs) : 1 Go | Partition <span style="text-decoration:underline;">logique</span> ;
+</li>
+<li>« /var/www » (Dossier web) : 1 Go | Partition <span style="text-decoration:underline;">logique</span> ;
+</li>
+<li>« swap » : 500 Mo | Partition <span style="text-decoration:underline;">logique</span>.
+</li>
+</ul>
+
+
+<p>
+<span style="text-decoration:underline;">N.B.</span>  : Les  partitions «  logiques »  peuvent être  redimensionnées
+grâce  à  des utilitaires  de  partitionnement  des disques.  Avec  ce
+schéma de partitionnement, il vous  reste un peu plus d'un giga-octets
+de libre (~ 1 Go).
+</p>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Comptes utilisateurs</h2>
+<div class="outline-text-2" id="text-3">
+
+
+</div>
+
+<div id="outline-container-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> Compte « root »</h3>
+<div class="outline-text-3" id="text-3-1">
+
+<p><span style="text-decoration:underline;">Aucun   utilisateur   supplémentaire</span>   n'a  été   ajouté   lors   de
+l'installation. Il n'y  a que l'utilisateur <b>Root</b> de créé.  Le mot de
+passe de  cet utilisateur a été  quelque peu renforcé pour  assurer un
+minimum de sécurité. <b>Il faut  modifier ce mot de passe immédiatement</b>
+après l'obtention de la machine virtuelle.
+<br/>
+</p>
+<p>
+La  commande pour  effectuer  le changement  de mot  de  passe est  la
+suivante : <b>passwd root</b>
+<br/>
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> Précisions concernant l'utilisation de « root »</h3>
+<div class="outline-text-3" id="text-3-2">
+
+<p><b>Veuillez utiliser  un mot de passe  fort pour sécuriser ce  compte</b> «
+root ».   En effet, si  ce compte est compromis  par un tiers,  <b>je ne pourrai être tenu  pour responsable</b> <b>des pertes et  fuites de données dont vous pourrez être victime</b>.
+</p>
+<p>
+Puisque vous avez accès à l'utilisateur root, <b>vous avez donc tous les droits  sur  la machine</b>.   Ainsi,  <b>vous  devez faire  attention  aux manipulations</b> que  vous effectuerez. <span style="text-decoration:underline;">Je  ne suis pas  responsable de vos  actes</span>  si  la  machine   devient  instable  après  une  mauvaise
+manipulation de votre part.
+</p>
+
+</div>
+
+</div>
+
+<div id="outline-container-3-3" class="outline-3">
+<h3 id="sec-3-3"><span class="section-number-3">3.3</span> Paquets et logiciels installés</h3>
+<div class="outline-text-3" id="text-3-3">
+
+
+</div>
+
+<div id="outline-container-3-3-1" class="outline-4">
+<h4 id="sec-3-3-1"><span class="section-number-4">3.3.1</span> Utilitaires systèmes</h4>
+<div class="outline-text-4" id="text-3-3-1">
+
+<ul>
+<li><i>Utilitaires usuels</i> installés par défaut par Debian 7.
+</li>
+<li>« <b>bash-completion</b>  » -  Permet de  compléter les  commandes bash
+    plus facilement, en appuyant sur la touche « Tab » du clavier.
+</li>
+<li>« <b>vim</b> » - Editeur de textes bruts - Version améliorée de « Vi ».
+</li>
+<li>« <b>openssh-server</b>  » -  Serveur SSH, pour  se connecter  de façon
+    sécurisée sur votre serveur.
+</li>
+<li>«  <b>openssl</b>  »  -  Permet  le chiffrement  des  données  grâce  à
+    l'utilisation de certificats, et d'une couche de sécurité « SSL ».
+</li>
+<li>« <b>sudo</b> »  - Un utilisateur pourra bénéficier  de certains droits
+    privilégiés  pour  effectuer   des  tâches  d'administration  plus
+    poussées.
+</li>
+<li>« <b>w3m</b> » - Navigateur web en ligne de commandes - Utile en cas de
+    besoin urgent de navigation, ou pour tester un site à la volée.
+</li>
+</ul>
+
+
+<p>
+N.B. : L'utilisation de <i>sudo</i>  doit être effectuée avec l'utilisateur
+«  root  »,  qui  sera  le seul  capable  d'attribuer  des  droits  et
+privilèges élevés à des utilisateurs que vous avez créés.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-3-3-2" class="outline-4">
+<h4 id="sec-3-3-2"><span class="section-number-4">3.3.2</span> Paquets pour le serveur web</h4>
+<div class="outline-text-4" id="text-3-3-2">
+
+<ul>
+<li>« <b>apache2</b> »  + « <b>apache2-utils</b> » - Serveur  web et utilitaires
+    complémentaires pour une expérience optimale.
+</li>
+<li>« <b>mysql-server</b>  » +  « <b>mysql-client</b>  » -  Serveur de  bases de
+    données (BDD)  et client pour  naviguer dans  les BDD en  ligne de
+    commandes.
+</li>
+<li>« <b>php5</b> » + « <b>php5-mysql</b> » - Langage de programmation web, avec
+    son extension  MySQL pour  communiquer avec  des bases  de données
+    relationnelles.
+</li>
+<li>« <b>phpmyadmin</b> » - Utilitaire pour gérer plus facilement les bases
+    de données
+</li>
+<li>«  <b>Gestweb</b>  »  -  Interface web  créée  par  IDEALOGEEK.fr  pour
+    administrer plus facilement le dossier « web » du serveur Apache2.
+</li>
+</ul>
+
+
+<p>
+N.B. :  L'interface web « Gestweb  » a été scriptée  et programmée par
+IDEALOGEEK.fr  -  cette  interface   est  disponible  publiquement  et
+gratuitement     sur     GitHub     à     l'adresse     suivante     :
+<a href="http://github.com/Mettmett/gestweb/">http://github.com/Mettmett/gestweb/</a>
+</p>
+<p>
+Toutes  les  contributions  sont  les bienvenues,  que  se  soit  pour
+améliorer ou corriger l'interface ;  en effet, n'étant pas programmeur
+de base, cette  interface est loin d'être parfaite.  Son but principal
+est  de  fournir  un  environnement simple  d'accès  pour  gérer  plus
+facilement votre dossier web du serveur Apache2.
+</p>
+
+</div>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Modifications effectuées</h2>
+<div class="outline-text-2" id="text-4">
+
+<p>Pour  que  le   serveur  puisse  être  utilisé   dans  les  meilleures
+conditions,  une  personnalisation  a  été effectuée  pour  rendre  la
+machine facile  d'accès. Certains  modifications sont  mineures, comme
+par exemple <b>la colorisation du shell</b>  (essayez la commande « ls /etc
+»), ou encore la <b>syntaxe colorée d'un fichier en utilisant Vim</b>.
+</p>
+
+</div>
+
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> Assistance</h2>
+<div class="outline-text-2" id="text-5">
+
+<p>Deux types  d'assistance vous  sont proposés,  pour que  cette machine
+puisse vous correspondre.
+</p>
+<p>
+Il est possible de choisir plusieurs options dans ces assistances - Il
+ne  s'agit  pas  d'un  forfait  ;  les  différentes  prestations  sont
+regroupées en  fonction du type de  demande.  Il est possible  que des
+changements   soient  effectués   sans  préavis   sur  ces   activités
+proposées.  Si une  telle  situation devait  se  produire, vous  serez
+naturellement avertis par  email, sous réserve de  nous l'avoir fourni
+au préalable.
+</p>
+<p>
+Le  prix  de   cette  assistance  n'a  pas  encore   été  défini.  Par
+conséquent,  lors  du  lancement  de  cette  prestation,  l'assistance
+est  <b>gratuite   pendant  deux  mois</b>.  Ensuite,   les  tarifs  seront
+appliqués suivant la demande d'assistance.
+</p>
+
+</div>
+
+<div id="outline-container-5-1" class="outline-3">
+<h3 id="sec-5-1"><span class="section-number-3">5.1</span> Assistance « IDEALO-Perso »</h3>
+<div class="outline-text-3" id="text-5-1">
+
+<p>Le serveur de base étant commun à tous, vous souhaitez obtenir <b>votre</b>
+serveur  exclusif, avec  votre personnalisation  ?  Nous  pouvons vous
+aider dans cette démarche !
+</p>
+<ul>
+<li><b>Création d'alias spécifique</b> pour personnaliser le shell ;
+</li>
+<li>Création d'un <b>nouvel utilisateur</b> ;
+</li>
+<li>Création d'un utilisateur  « neo », disposant d'un  shell Matrix -
+    [ <b>Gadget IDEALOGEEK !</b> ]
+</li>
+<li><span style="text-decoration:underline;">Installation</span> et <span style="text-decoration:underline;">Personnalisation</span> d'un nouveau shell ;
+</li>
+<li><span style="text-decoration:underline;">Installation</span>  de  logiciels  spécifiques (<i>dans  la  limite  des     capacités du serveur et de mes compétences</i>) ;
+</li>
+</ul>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-5-2" class="outline-3">
+<h3 id="sec-5-2"><span class="section-number-3">5.2</span> Assistance « IDEALO-Technik »</h3>
+<div class="outline-text-3" id="text-5-2">
+
+<p>Il s'agit  d'une assistance  pour que vous  puissiez avoir  un serveur
+encore   plus   puissant,   avec  des   options   et   fonctionnalités
+complémentaires.
+</p>
+<ul>
+<li><span style="text-decoration:underline;">Authentification</span> <b>LDAP</b> OU <b>LDAPS</b> (secure) ;
+</li>
+<li><span style="text-decoration:underline;">Authentification</span> par fichier <b>.htaccess</b> ;
+</li>
+<li>Mise en place d'une <span style="text-decoration:underline;">sécurité</span> <b>SSL</b> avec <i>OpenSSL</i> ;
+</li>
+<li><span style="text-decoration:underline;">Authentification</span> <b>SSL</b> grâce à des certificats d'identités ;
+</li>
+<li><span style="text-decoration:underline;">Sécurisation</span> Apache2 (<i>Serveur web</i>) ;
+</li>
+<li><span style="text-decoration:underline;">Sécurisation</span> OpenSSH (<i>Accès SSH</i>) ;
+</li>
+<li><span style="text-decoration:underline;">Installation</span> d'un <b>analyseur de statistiques web</b> (<i>AWstats</i>) ;
+</li>
+<li><span style="text-decoration:underline;">Mise en place</span> d'un CMS (WordPress).
+</li>
+<li><span style="text-decoration:underline;">Création</span> de <b>VirtualHost</b> ;
+</li>
+</ul>
+
+
+<p>
+<b>A savoir :</b>
+</p>
+<p>
+Il  n'y  a  <b>pas  de  forfait  maintenance</b>  disponible  -  En  effet,
+compte-tenu  de  la charge  de  travail  que cela  représenterait,  et
+travaillant seul  sur ce  projet, je  ne peux  vous garantir  un suivi
+total de votre machine virtuelle.
+</p>
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> Informations complémentaires</h2>
+<div class="outline-text-2" id="text-6">
+
+
+</div>
+
+<div id="outline-container-6-1" class="outline-3">
+<h3 id="sec-6-1"><span class="section-number-3">6.1</span> Accessibilité sur le réseau</h3>
+<div class="outline-text-3" id="text-6-1">
+
+<p>La machine virtuelle est disponible pour quiconque souhaite un serveur
+web  sous  Linux,  prêt  à l'emploi  après  quelques  modifications  à
+effectuer. En effet,  la machine de base est configurée  en "Accès par
+pont", au niveau du réseau. Ainsi,  la machine sera déjà prête pour se
+voir attribuer  une adresse IP fournie  par votre serveur DHCP  sur le
+réseau.
+</p>
+<p>
+Si besoin est,  voici la procédure pour changer le  mode d'accès de la
+machine virtuelle :
+</p><ul>
+<li>Dans  un  premier  temps,  <b>assurez-vous que  votre  réseau  local     dispose d'un serveur DHCP</b> pour que votre machine virtuelle puisse
+    obtenir une IP, et que votre machine virtuelle est bien éteinte.
+</li>
+<li>Dans VirtualBox,  <b>cliquez sur votre machine  virtuelle</b>, puis sur
+    le <b>bouton</b> "<b>Configuration</b>" (<i>icône en forme de roue</i>).
+</li>
+<li>Une  fenêtre   va  s'ouvrir,  cliquez  alors   sur  la  <b>rubrique</b>
+    "<b>Réseaux</b>" dans la partie à gauche.
+</li>
+<li>Une   liste   déroulante   sur   la   droite   est   définie   sur
+    "<i>NAT</i>". <b>Cliquez  sur cette liste</b>, et  <b>sélectionnez "*Accès par     pont</b>".
+</li>
+<li>Vous  devez <b>sélectionner  la  carte réseau  permettant l'accès  à     votre  réseau  local</b>  sur  laquelle  la  machine  virtuelle  doit
+    s'appuyer.
+</li>
+<li>Lorsque  tout  est  terminé,   vous  pouvez  démarrer  la  machine
+    virtuelle -  Etant <b>configurée par  défaut en DHCP</b>, elle  sera en
+    mesure d'obtenir une IP par votre serveur DHCP.
+</li>
+</ul>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-6-2" class="outline-3">
+<h3 id="sec-6-2"><span class="section-number-3">6.2</span> Me contacter</h3>
+<div class="outline-text-3" id="text-6-2">
+
+<p>Des idées  pour améliorer  le service  ?  Un  avis critique  sur cette
+machine   ?   Je   suis   disponible  à   tout   moment  à   l'adresse
+(julien@idealogeek.fr),      mais      aussi     sur      le      blog
+(<a href="http://idealogeek.fr/contact/">http://idealogeek.fr/contact/</a>).   N'hésitez pas  à  me contacter,  je
+ferai tout pour vous répondre dans les plus brefs délais !
+</p></div>
+</div>
+</div>
+</div>
+
+<div id="postamble">
+<p class="date">Date: 04/07/2013</p>
+<p class="author">Auteur: Julien HOMMET - HTTP://IDEALOGEEK.FR/\\Contact : julien@idealogeek.fr</p>
+<p class="creator"><a href="http://orgmode.org">Org</a> version 7.9.3f with <a href="http://www.gnu.org/software/emacs/">Emacs</a> version 24</p>
+<a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
+
+</div>
+</body>
+</html>
