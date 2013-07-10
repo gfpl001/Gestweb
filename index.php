@@ -7,7 +7,7 @@
 <body>
 
 <!-- Titre centré & animé | page d'accueil du serveur -->
-<marquee><h1><center>.: Accueil :.</center><br />Serveur web Debian "debian-srv"<br /><center><a href="http://idealogeek.fr/" name="Blog IDEALOGEEK - Accueil" target="_blank">IDEALOGEEK</a></center></h1></marquee>
+<h1><center>.: Accueil :.</center><br />Serveur web Debian "debian-srv"<br /><center><a href="http://idealogeek.fr/" name="Blog IDEALOGEEK - Accueil" target="_blank">IDEALOGEEK</a></center></h1>
 
 	<p align="justify"> <!-- Présentation succincte du serveur / page web -->
 <a href="http://idealogeek.fr/" name="Blog IDEALOGEEK - Accueil" target="_blank">IDEALOGEEK</a> vous propose un serveur web basé sur Debian 7.1 Stable « Wheezy » ; Le serveur a été préalablement installé et configuré pour que vous puissiez l'utiliser dès son démarrage. <br/>
