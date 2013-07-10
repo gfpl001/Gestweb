@@ -14,5 +14,7 @@ Cette interface a été conçue pour gérer efficacement un serveur web Linux to
 *TO-DO Liste* :
  - Navigation dynamique dans les dossiers ;
  - Affichage des logs Apache2 ;
- - Scripts de démarrage / arrêt / redémarrage / status du serveur Apache2 - MySQL
- - Faites nous parvenir vos besoins par mail ! [contact@idealogeek.fr]
+
+
+=======
+Faites nous parvenir vos besoins par mail ! [contact@idealogeek.fr]
