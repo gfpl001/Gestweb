@@ -1,8 +1,8 @@
 Gestweb
-=======
+=====
 
 Interface web (HTML / PHP) de gestion d'un serveur web Apache2 - IDEALOGEEK.fr
-=======
+=====
 
 Cette interface a été conçue pour gérer efficacement un serveur web Linux tournant avec Apache2.
 
