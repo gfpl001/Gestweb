@@ -1,5 +1,5 @@
 <?php
-$uploaddir = '/srv/http/debian-srv/'; // Racine du dossier web
+$uploaddir = '/var/www/'; // Racine du dossier web
 $uploadfile = $uploaddir . basename($_FILES['fichiers']['name']);
 
 echo '<pre>';

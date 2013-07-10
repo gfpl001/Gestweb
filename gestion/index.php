@@ -4,7 +4,7 @@
 if ( (count($_POST) != 0) )
 { 
   if (isset($_POST["nom-dossier"])) { $dossier = htmlspecialchars($_POST["nom-dossier"]); } // Si le POST[nom-dossier] existe, alors on récupère le contenu de la variable
-  else { $affichage = shell_exec('ls -alh /srv/http/debian-srv'); } // Sinon, on montre le dossier web par défaut
+  else { $affichage = shell_exec('ls -alh /var/www/'); } // Sinon, on montre le dossier web par défaut
 
   if (isset($_POST["nom-fichier"])) { $fichier = htmlspecialchars($_POST["nom-fichier"]); } // Si le POST[nom-fichier] existe, alors on récupère le contenu de la variable
 
@@ -24,12 +24,12 @@ if ( (count($_POST) != 0) )
   else if ( (isset($_POST["voir-fichier"])) && ($_POST["voir-fichier"] == 1) )
   { 
   echo "<fieldset align='center'>Vous affichez le fichier « <b>".$_POST["nom-fichier"]."</b> ».</fieldset>";
-  $fichier_affichage = shell_exec("echo cat ".$_POST["nom-fichier"]." >> /srv/http/debian-srv/gestion/script.sh");
-  $affichage = shell_exec("/srv/http/debian-srv/gestion/script.sh"); // On exécute le script précédemment rempli
-  $reset = shell_exec("echo '#!/bin/sh' > /srv/http/debian-srv/gestion/script.sh"); // Remise à zéro du fichier / script pour effectuer de nouvelles commandes, sans avoir les commandes précédemment effectuées
+  $fichier_affichage = shell_exec("echo cat ".$_POST["nom-fichier"]." >> /var/www/gestion/script.sh");
+  $affichage = shell_exec("/var/www/gestion/script.sh"); // On exécute le script précédemment rempli
+  $reset = shell_exec("echo '#!/bin/bash' > /var/www/gestion/script.sh"); // Remise à zéro du fichier / script pour effectuer de nouvelles commandes, sans avoir les commandes précédemment effectuées
   }
 }
-else { echo "<fieldset align='center'>Vous êtes dans le dossier d'origine, soit « <b>/var/www/</b> »</fieldset>"; $affichage = shell_exec('ls -alh /srv/http/debian-srv'); } // Dossier web par défaut si aucun dossier sélectionné
+else { echo "<fieldset align='center'>Vous êtes dans le dossier d'origine, soit « <b>/var/www/</b> »</fieldset>"; $affichage = shell_exec('ls -alh /var/www/'); } // Dossier web par défaut si aucun dossier sélectionné
 
 ?>
 
@@ -112,7 +112,7 @@ else { echo "<fieldset align='center'>Vous êtes dans le dossier d'origine, soit
 	<form action="#" method="POST">
 		<input type="hidden" name="voir-fichier" value="1" />
 	<!-- Choix d'un fichier à afficher -->
-		Nom du <b><u>fichier</u> à afficher</b> : <input type="text" name="nom-fichier" value="<?php if (isset($_POST['nom-dossier'])) { echo $_POST['nom-dossier']; } else { echo '/var/www/'; } ?>" /> <input type="submit" name="Voir le fichier" value="Voir le fichier" />
+		<b><u>Contenu du fichier</u> à afficher</b> : <input type="text" name="nom-fichier" value="<?php if (isset($_POST['nom-dossier'])) { echo $_POST['nom-dossier']; } else { echo '/var/www/'; } ?>" /> <input type="submit" name="Voir le fichier" value="Voir le fichier" />
 	</form>
 
 	<form action="#" method="POST">
@@ -126,10 +126,23 @@ else { echo "<fieldset align='center'>Vous êtes dans le dossier d'origine, soit
 
 <div class="systeme_onglets">
         <div class="onglets">
+	    <span class="onglet_0 onglet" id="onglet_serveur" onclick="javascript:change_onglet('serveur');">Gestion du serveur</span>
             <span class="onglet_0 onglet" id="onglet_dossiers" onclick="javascript:change_onglet('dossiers');">Gestion dossiers</span>
             <span class="onglet_0 onglet" id="onglet_fichiers" onclick="javascript:change_onglet('fichiers');">Gestion fichiers</span>
         </div>
         <div class="contenu_onglets">
+            <div class="contenu_onglet" id="contenu_onglet_serveur">
+		<ul>
+<center><h3>Serveur WEB</h3></center>
+			<li><form action="system.php" method="POST"> <input type="hidden" name="reboot" value="1" /> <input type="hidden" name="srv-web" value="1" /> <input type="submit" name="Redémarrer" style="background-color: #FFCC33; color: #000000" value="Redémarrer le serveur web" /><form></li>
+			<li><form action="system.php" method="POST"> <input type="hidden" name="halt" value="1" /> <input type="hidden" name="srv-web" value="1" /> <input type="submit" name="Arrêt" style="background-color: #CC0000; color: #ffffff" value="Arrêter le serveur web" /><form></li>
+<br /><center><h3>Serveur MySQL</h3></center>
+			<li><form action="system.php" method="POST"> <input type="hidden" name="start" value="1" /> <input type="hidden" name="srv-mysql" value="1" /> <input type="submit" name="Arrêt" style="background-color: #33CC00; color: #ffffff" value="Démarrer le serveur MySQL" /><form></li>
+			<li><form action="system.php" method="POST"> <input type="hidden" name="reboot" value="1" /> <input type="hidden" name="srv-mysql" value="1" /> <input type="submit" name="Arrêt" style="background-color: #FFCC33; color: #000000" value="Redémarrer le serveur MySQL" /><form></li>
+			<li><form action="system.php" method="POST"> <input type="hidden" name="halt" value="1" /> <input type="hidden" name="srv-mysql" value="1" /> <input type="submit" name="Arrêt" style="background-color: #CC0000; color: #ffffff" value="Arrêter le serveur MySQL" /><form></li>
+		</ul>
+	    </div>
+
             <div class="contenu_onglet" id="contenu_onglet_dossiers">
                 <h1>Gestion des dossiers</h1>
 		<form action="creation.php" method="POST">
@@ -175,10 +188,17 @@ else { echo "<fieldset align='center'>Vous êtes dans le dossier d'origine, soit
 			</fieldset>
 		</form>
 
+<fieldset><legend><h3>Envoi de fichiers</h3></legend>
+<form action="upload.php" method="POST" enctype="multipart/form-data">
+Fichier à envoyer : <input type="file" name="fichiers" /><br />
+<input type="submit" name="envoyer" value="Envoyer le fichier" />
+</form>
+</fieldset>
+
 		<form action="delete.php" method="POST">
 		<input type="hidden" name="delete" value="1" /> <input type="hidden" name="fichier" value="1" /> 
 		<!-- Suppression d'un dossier -->
-			<fieldset><legend><h2>Suppression d'un fichier dans</h2></legend>
+			<fieldset><legend><h2>Suppression d'un fichier</h2></legend>
 			Nom du fichier : <input type="text" name="nom-fichier" /> <input type="submit" name="Supprimer le fichier" value="Supprimer le fichier" />
 			</fieldset>
 		</form>
@@ -202,15 +222,6 @@ else { echo "<fieldset align='center'>Vous êtes dans le dossier d'origine, soit
     </script>
 </td></tr></table>
 
-</fieldset>
-
-<hr width="50%" />
-
-<fieldset><legend><h3>Envoi de fichiers</h3></legend>
-<form action="upload.php" method="POST" enctype="multipart/form-data">
-Fichier à envoyer : <input type="file" name="fichiers" /><br />
-<input type="submit" name="envoyer" value="Envoyer le fichier" />
-</form>
 </fieldset>
 
 </body>

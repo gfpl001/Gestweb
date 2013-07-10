@@ -5,10 +5,10 @@ if ( (isset($_POST["dossier"])) && ($_POST["creation"]=='1') && (count($_POST) !
 {
   $dossier = htmlspecialchars($_POST["nom-dossier"]);
 
-  $ajout_dossier = shell_exec("echo mkdir /srv/http/debian-srv/".$dossier." >> /srv/http/debian-srv/gestion/script.sh");
-  $droits_dossier = shell_exec("echo chmod 755 /srv/http/debian-srv/".$dossier." >> /srv/http/debian-srv/gestion/script.sh");
-  $execution = shell_exec("/srv/http/debian-srv/gestion/script.sh"); // On exécute le script précédemment rempli
-  $reset = shell_exec("echo '#!/bin/sh' > /srv/http/debian-srv/gestion/script.sh"); // Remise à zéro du fichier / script pour effectuer de nouvelles commandes, sans avoir les commandes précédemment effectuées
+  $ajout_dossier = shell_exec("echo mkdir /var/www/".$dossier." >> /var/www/gestion/script.sh");
+  $droits_dossier = shell_exec("echo chmod 755 /var/www/".$dossier." >> /var/www/gestion/script.sh");
+  $execution = shell_exec("/var/www/gestion/script.sh"); // On exécute le script précédemment rempli
+  $reset = shell_exec("echo '#!/bin/bash' > /var/www/gestion/script.sh"); // Remise à zéro du fichier / script pour effectuer de nouvelles commandes, sans avoir les commandes précédemment effectuées
 ?>
 
 <html>
@@ -28,11 +28,11 @@ else if ( (isset($_POST["fichier"])) && ($_POST["creation"]=='1') && (count($_PO
   $fichier = htmlspecialchars($_POST["nom-fichier"]);
   $contenu_fichier = addslashes($_POST["contenu-fichier"]);
 
-  $ajout_fichier = shell_exec("echo touch /srv/http/debian-srv/".$fichier." >> /srv/http/debian-srv/gestion/script.sh");
-  $droits_fichier = shell_exec("echo chmod 664 /srv/http/debian-srv/".$fichier." >> /srv/http/debian-srv/gestion/script.sh");
-  $ajout_contenu_fichier = shell_exec("echo ".$contenu_fichier." >> /srv/http/debian-srv/".$fichier);
-  $execution = shell_exec("/srv/http/debian-srv/gestion/script.sh"); // On exécute le script précédemment rempli
-  $reset = shell_exec("echo '#!/bin/sh' > /srv/http/debian-srv/gestion/script.sh"); // Remise à zéro du fichier / script pour effectuer de nouvelles commandes, sans avoir les commandes précédemment effectuées
+  $ajout_fichier = shell_exec("echo touch /var/www/".$fichier." >> /var/www/gestion/script.sh");
+  $droits_fichier = shell_exec("echo chmod 664 /var/www/".$fichier." >> /var/www/gestion/script.sh");
+  $ajout_contenu_fichier = shell_exec("echo ".$contenu_fichier." >> /var/www/".$fichier);
+  $execution = shell_exec("/var/www/gestion/script.sh"); // On exécute le script précédemment rempli
+  $reset = shell_exec("echo '#!/bin/bash' > /var/www/gestion/script.sh"); // Remise à zéro du fichier / script pour effectuer de nouvelles commandes, sans avoir les commandes précédemment effectuées
 ?>
 <html>
 <body>
