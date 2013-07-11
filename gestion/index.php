@@ -24,9 +24,7 @@ if ( (count($_POST) != 0) )
   }
 }
 else { echo "<fieldset align='center'>Vous êtes dans le dossier d'origine, soit « <b>/var/www/</b> »</fieldset>"; $affichage = shell_exec('ls -alh /var/www/'); } // Dossier web par défaut si aucun dossier sélectionné
-
 ?>
-
 
 <html>
 
@@ -72,7 +70,8 @@ else { echo "<fieldset align='center'>Vous êtes dans le dossier d'origine, soit
 
 <fieldset><legend><h3>Envoi d'un fichier</h3></legend>
 	<form action="upload.php" method="POST" enctype="multipart/form-data">
-	Fichier à envoyer : <input type="file" name="fichiers" /><br />
+	<input type="hidden" name="dossier" value="<?php if (isset($dossier)) { echo $dossier; } else { echo '/var/www/'; } ?>" /> <input type="hidden" name="MAX_FILE_SIZE" value="1000000">
+	Fichier à envoyer : <input type="file" name="fichier" /><br />
 	<input type="submit" name="envoyer" value="Envoyer le fichier" />
 	</form>
 </fieldset>
@@ -158,12 +157,13 @@ Emplacement du fichier : <input type="text" name="nom-dossier" size="40" value="
 	    <div class="contenu_onglet" id="contenu_onglet_serveur"><center>
 <h3>Serveur WEB</h3>
 		<ul style="list-style:none; margin: 5 0; padding: 5 0;">
-			<li><form action="system.php" method="POST"> <input type="hidden" name="reboot-www" value="1" /> <input type="hidden" name="srv-web" value="1" /> <input type="submit" style="background-color: #FFCC33; color: #000000" value="Redémarrer le serveur web" /><form> <form action="system.php" method="POST"> <input type="hidden" name="halt-www" value="1" /> <input type="hidden" name="srv-web" value="1" /> <input type="submit" style="background-color: #CC0000; color: #ffffff" value="Arrêter le serveur web" /><form></li>
+			<li><form action="system.php" method="POST"> <input type="hidden" name="reboot-www" value="1" /> <input type="hidden" name="server" value="srv-web" /> <input type="submit" style="background-color: #FFCC33; color: #000000" value="Redémarrer le serveur web" /><form> <form action="system.php" method="POST"> <input type="hidden" name="halt-www" value="1" /> <input type="hidden" name="srv-web" value="1" /> <input type="submit" style="background-color: #CC0000; color: #ffffff" value="Arrêter le serveur web" /><form></li>
 		</ul>
-<hr /><h3>Serveur MySQL</h3>
+<hr />
+<h3>Serveur MySQL</h3>
 	<ul style="list-style:none; margin: 5 0; padding: 5 0;">
-		<li><form action="system.php" method="POST"> <input type="hidden" name="start-mysql" value="1" /> <input type="hidden" name="srv-mysql" value="1" /> <input type="submit" style="background-color: #33CC00; color: #ffffff" value="Démarrer le serveur MySQL" /><form> <form action="system.php" method="POST"> <input type="hidden" name="reboot-mysql" value="1" /> <input type="hidden" name="srv-mysql" value="1" /> <input type="submit" style="background-color: #FFCC33; color: #000000" value="Redémarrer le serveur MySQL" /><form></li>
-		<li><form action="system.php" method="POST"> <input type="hidden" name="halt-mysql" value="1" /> <input type="hidden" name="srv-mysql" value="1" /> <input type="submit" style="background-color: #CC0000; color: #ffffff" value="Arrêter le serveur MySQL" /><form></li>
+		<li><form action="system.php" method="POST"> <input type="hidden" name="start-mysql" value="1" /> <input type="hidden" name="server" value="srv-mysql" /> <input type="submit" style="background-color: #33CC00; color: #ffffff" value="Démarrer le serveur MySQL" /><form> <form action="system.php" method="POST"> <input type="hidden" name="reboot-mysql" value="1" /> <input type="hidden" name="srv-mysql" value="1" /> <input type="submit" style="background-color: #FFCC33; color: #000000" value="Redémarrer le serveur MySQL" /><form></li>
+		<li><form action="system.php" method="POST"> <input type="hidden" name="halt-mysql" value="1" /> <input type="hidden" name="server" value="srv-mysql" /> <input type="submit" style="background-color: #CC0000; color: #ffffff" value="Arrêter le serveur MySQL" /><form></li>
 <hr />
 <h3>Fonctionnalités supplémentaires</h3>
 	<ul style="list-style:none;">

@@ -1,5 +1,5 @@
 <?php // -- Script par IDEALOGEEK --
-  $fichier_affichage = shell_exec("echo cat /etc/php5/php.ini >> /var/www/gestion/script.sh");
+  $fichier_affichage = shell_exec("echo cat /etc/php5/apache2/php.ini >> /var/www/gestion/script.sh");
   $affichage = shell_exec("/var/www/gestion/script.sh"); // On exécute le script précédemment rempli
   $reset = shell_exec("echo '#!/bin/sh' > /var/www/gestion/script.sh"); // Remise à zéro du fichier / script pour effectuer de nouvelles commandes, sans avoir les commandes précédemment effectuées
 ?>
