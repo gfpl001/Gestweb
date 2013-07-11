@@ -1,5 +1,5 @@
 <?php
-$uploaddir = '/var/www/'; // Racine du dossier web
+$uploaddir = '/srv/http/debian-srv/Gestweb/'; // Racine du dossier web
 $uploadfile = $uploaddir . basename($_FILES['fichiers']['name']);
 
 echo '<pre>';

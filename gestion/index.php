@@ -4,7 +4,7 @@
 if ( (count($_POST) != 0) )
 { 
   if (isset($_POST["nom-dossier"])) { $dossier = htmlspecialchars($_POST["nom-dossier"]); } // Si le POST[nom-dossier] existe, alors on récupère le contenu de la variable
-  else { $affichage = shell_exec('ls -alh /var/www/'); } // Sinon, on montre le dossier web par défaut
+  else { $affichage = shell_exec('ls -alh /srv/http/debian-srv/Gestweb'); } // Sinon, on montre le dossier web par défaut
 
   if (isset($_POST["nom-fichier"])) { $fichier = htmlspecialchars($_POST["nom-fichier"]); } // Si le POST[nom-fichier] existe, alors on récupère le contenu de la variable
 
@@ -18,12 +18,12 @@ if ( (count($_POST) != 0) )
   else if ( (isset($_POST["voir-fichier"])) && ($_POST["voir-fichier"] == 1) )
   { 
   echo "<fieldset align='center'>Vous affichez le fichier « <b>".$_POST["nom-fichier"]."</b> ».</fieldset>";
-  $fichier_affichage = shell_exec("echo cat ".$_POST["nom-fichier"]." >> /var/www/gestion/script.sh");
-  $affichage = shell_exec("/var/www/gestion/script.sh"); // On exécute le script précédemment rempli
-  $reset = shell_exec("echo '#!/bin/sh' > /var/www/gestion/script.sh"); // Remise à zéro du fichier / script pour effectuer de nouvelles commandes, sans avoir les commandes précédemment effectuées
+  $fichier_affichage = shell_exec("echo cat ".$_POST["nom-fichier"]." >> /srv/http/debian-srv/Gestwebgestion/script.sh");
+  $affichage = shell_exec("/srv/http/debian-srv/Gestwebgestion/script.sh"); // On exécute le script précédemment rempli
+  $reset = shell_exec("echo '#!/bin/sh' > /srv/http/debian-srv/Gestwebgestion/script.sh"); // Remise à zéro du fichier / script pour effectuer de nouvelles commandes, sans avoir les commandes précédemment effectuées
   }
 }
-else { echo "<fieldset align='center'>Vous êtes dans le dossier d'origine, soit « <b>/var/www/</b> »</fieldset>"; $affichage = shell_exec('ls -alh /var/www/'); } // Dossier web par défaut si aucun dossier sélectionné
+else { echo "<fieldset align='center'>Vous êtes dans le dossier d'origine, soit « <b>/srv/http/debian-srv/Gestweb</b> »</fieldset>"; $affichage = shell_exec('ls -alh /srv/http/debian-srv/Gestweb'); } // Dossier web par défaut si aucun dossier sélectionné
 
 ?>
 
@@ -101,13 +101,13 @@ else { echo "<fieldset align='center'>Vous êtes dans le dossier d'origine, soit
 	<form action="#" method="POST">
 		<input type="hidden" name="move" value="1" />
 	<!-- Choix d'un dossier dans lequel il faut se déplacer -->
-		<b>Se déplacer</b> dans un dossier : <input type="text" name="nom-dossier" value="<?php if (isset($_POST['nom-dossier'])) { echo $_POST['nom-dossier']; } else { echo '/var/www/'; } ?>" /> <input type="submit" name="Se déplacer" value="Se déplacer" />
+		<input type="text" name="nom-dossier" size="40" value="<?php if (isset($dossier)) { echo $dossier; } else { echo '/srv/http/debian-srv/Gestweb/'; } ?>" /> <input type="submit" name="Se déplacer" value="Se déplacer dans un dossier" />
 	</form>
 
 	<form action="#" method="POST">
 		<input type="hidden" name="voir-fichier" value="1" />
 	<!-- Choix d'un fichier à afficher -->
-		<b><u>Contenu du fichier</u> à afficher</b> : <input type="text" name="nom-fichier" value="<?php if (isset($_POST['nom-dossier'])) { echo $_POST['nom-dossier']; } else { echo '/var/www/'; } ?>" /> <input type="submit" name="Voir le fichier" value="Voir le fichier" />
+		<input type="text" name="nom-fichier" size="40" value="<?php if (isset($dossier)) { echo $dossier; } else { echo '/srv/http/debian-srv/Gestweb/'; } ?>" /> <input type="submit" name="Voir le fichier" value="Afficher le contenu du fichier" />
 	</form>
 
 <fieldset><legend><h3>Envoi d'un fichier</h3></legend>
@@ -130,19 +130,19 @@ else { echo "<fieldset align='center'>Vous êtes dans le dossier d'origine, soit
         </div>
         <div class="contenu_onglets">
             <div class="contenu_onglet" id="contenu_onglet_dossiers">
-                <h1>Gestion des dossiers</h1>
+                <center><h1>Gestion des dossiers</h1> dans <b><?php if (isset($dossier)) { echo $dossier; } else { echo '/srv/http/debian-srv/Gestweb/'; } ?></b></center><hr />
 		<form action="creation.php" method="POST">
-		<input type="hidden" name="creation" value="1" /> <input type="hidden" name="dossier" value="1" />
+		<input type="hidden" name="creation" value="1" /> <input type="hidden" name="dossier" value="1" /> <input type="hidden" name="emplacement" value="<?php if (isset($dossier)) { echo $dossier; } else { echo '/srv/http/debian-srv/Gestweb/'; } ?>" />
 		<!-- Création d'un dossier -->
 			<fieldset><legend><h2>Création d'un dossier</h2></legend>
-			Nom du dossier : <input type="text" name="nom-dossier" /> 
+			Nom du dossier : <input type="text" name="nom-nouveau-dossier" /> 
 <input type="submit" name="Créer le dossier" value="Créer le dossier" />
 	
 			</fieldset>
 		</form>
 
 		<form action="delete.php" method="POST">
-		<input type="hidden" name="delete" value="1" /> <input type="hidden" name="dossier" value="1" />
+		<input type="hidden" name="delete" value="1" /> <input type="hidden" name="dossier" value="1" /> <input type="hidden" name="emplacement" value="<?php if (isset($dossier)) { echo $dossier; } else { echo '/srv/http/debian-srv/Gestweb/'; } ?>" />
 		<!-- Suppression d'un dossier -->
 			<fieldset><legend><h2>Suppression d'un dossier</h2></legend>
 			Nom du dossier : <input type="text" name="nom-dossier" /> 
@@ -151,7 +151,7 @@ else { echo "<fieldset align='center'>Vous êtes dans le dossier d'origine, soit
 		</form>
 
 		<form action="renommage.php" method="POST">
-		<input type="hidden" name="renommage" value="1" /> <input type="hidden" name="dossier" value="1" />
+		<input type="hidden" name="renommage" value="1" /> <input type="hidden" name="dossier" value="1" /> <input type="hidden" name="emplacement" value="<?php if (isset($dossier)) { echo $dossier; } else { echo '/srv/http/debian-srv/Gestweb/'; } ?>" />
 		<!-- Renommer d'un dossier -->
 			<fieldset><legend><h2>Renommage d'un dossier</h2></legend>
 			Nom du dossier à renommer : <input type="text" name="nom-dossier-origine" /> <hr />
@@ -162,12 +162,15 @@ else { echo "<fieldset align='center'>Vous êtes dans le dossier d'origine, soit
             </div>
 
             <div class="contenu_onglet" id="contenu_onglet_fichiers">
-                <h1>Gestion des fichiers</h1>
+                <center><h1>Gestion des fichiers</h1> dans <b><?php if (isset($dossier)) { echo $dossier; } else { echo '/srv/http/debian-srv/Gestweb/'; } ?></b></center><hr />
 		<form action="creation.php" method="POST">
-		<input type="hidden" name="creation" value="1" /> <input type="hidden" name="fichier" value="1" />
-		<!-- Création d'un dossier -->
+		<input type="hidden" name="creation" value="1" /> <input type="hidden" name="fichier" value="1" /> 
+		<!-- Création d'un fichier -->
 			<fieldset><legend><h2>Création d'un fichier</h2></legend>
 			Nom du fichier : <input type="text" name="nom-fichier" /> <br />
+
+Emplacement du fichier : <input type="text" name="nom-dossier" size="40" value="<?php if (isset($dossier)) { echo $dossier; } else { echo '/srv/http/debian-srv/Gestweb/'; } ?>" /><br />
+
 			Contenu du fichier : <textarea name="contenu-fichier" rows="6" cols="25"> </textarea> <br />
 		<center><input type="submit" name="Créer le fichier" value="Créer le fichier" /></center>
 	
@@ -175,7 +178,7 @@ else { echo "<fieldset align='center'>Vous êtes dans le dossier d'origine, soit
 		</form>
 
 		<form action="delete.php" method="POST">
-		<input type="hidden" name="delete" value="1" /> <input type="hidden" name="fichier" value="1" /> 
+		<input type="hidden" name="delete" value="1" /> <input type="hidden" name="fichier" value="1" /> <input type="hidden" name="emplacement" value="<?php if (isset($dossier)) { echo $dossier; } else { echo '/srv/http/debian-srv/Gestweb/'; } ?>" />
 		<!-- Suppression d'un dossier -->
 			<fieldset><legend><h2>Suppression d'un fichier</h2></legend>
 			Nom du fichier : <input type="text" name="nom-fichier" /> <input type="submit" name="Supprimer le fichier" value="Supprimer le fichier" />
@@ -183,7 +186,7 @@ else { echo "<fieldset align='center'>Vous êtes dans le dossier d'origine, soit
 		</form>
 
 		<form action="renommage.php" method="POST">
-		<input type="hidden" name="renommage" value="1" /> <input type="hidden" name="fichier" value="1" />
+		<input type="hidden" name="renommage" value="1" /> <input type="hidden" name="fichier" value="1" /> <input type="hidden" name="emplacement" value="<?php if (isset($dossier)) { echo $dossier; } else { echo '/srv/http/debian-srv/Gestweb/'; } ?>" />
 		<!-- Renommer d'un dossier -->
 			<fieldset><legend><h2>Renommage d'un fichier</h2></legend>
 			Nom du fichier à renommer : <input type="text" name="nom-fichier-origine" /> <hr />
@@ -195,12 +198,12 @@ else { echo "<fieldset align='center'>Vous êtes dans le dossier d'origine, soit
 	    <div class="contenu_onglet" id="contenu_onglet_serveur">
 		<ul>
 <center><h3>Serveur WEB</h3></center>
-			<li><form action="system.php" method="POST"> <input type="hidden" name="reboot" value="1" /> <input type="hidden" name="srv-web" value="1" /> <input type="submit" style="background-color: #FFCC33; color: #000000" value="Redémarrer le serveur web" /><form></li>
-			<li><form action="system.php" method="POST"> <input type="hidden" name="halt" value="1" /> <input type="hidden" name="srv-web" value="1" /> <input type="submit" style="background-color: #CC0000; color: #ffffff" value="Arrêter le serveur web" /><form></li>
-<br /><center><h3>Serveur MySQL</h3></center>
-			<li><form action="system.php" method="POST"> <input type="hidden" name="start" value="1" /> <input type="hidden" name="srv-mysql" value="1" /> <input type="submit" style="background-color: #33CC00; color: #ffffff" value="Démarrer le serveur MySQL" /><form></li>
-			<li><form action="system.php" method="POST"> <input type="hidden" name="reboot" value="1" /> <input type="hidden" name="srv-mysql" value="1" /> <input type="submit" style="background-color: #FFCC33; color: #000000" value="Redémarrer le serveur MySQL" /><form></li>
-			<li><form action="system.php" method="POST"> <input type="hidden" name="halt" value="1" /> <input type="hidden" name="srv-mysql" value="1" /> <input type="submit" style="background-color: #CC0000; color: #ffffff" value="Arrêter le serveur MySQL" /><form></li>
+			<li><form action="system.php" method="POST"> <input type="hidden" name="reboot-www" value="1" /> <input type="hidden" name="srv-web" value="1" /> <input type="submit" style="background-color: #FFCC33; color: #000000" value="Redémarrer le serveur web" /><form></li>
+			<li><form action="system.php" method="POST"> <input type="hidden" name="halt-www" value="1" /> <input type="hidden" name="srv-web" value="1" /> <input type="submit" style="background-color: #CC0000; color: #ffffff" value="Arrêter le serveur web" /><form></li>
+<br /><hr /><center><h3>Serveur MySQL</h3></center>
+			<li><form action="system.php" method="POST"> <input type="hidden" name="start-mysql" value="1" /> <input type="hidden" name="srv-mysql" value="1" /> <input type="submit" style="background-color: #33CC00; color: #ffffff" value="Démarrer le serveur MySQL" /><form></li>
+			<li><form action="system.php" method="POST"> <input type="hidden" name="reboot-mysql" value="1" /> <input type="hidden" name="srv-mysql" value="1" /> <input type="submit" style="background-color: #FFCC33; color: #000000" value="Redémarrer le serveur MySQL" /><form></li>
+			<li><form action="system.php" method="POST"> <input type="hidden" name="halt-mysql" value="1" /> <input type="hidden" name="srv-mysql" value="1" /> <input type="submit" style="background-color: #CC0000; color: #ffffff" value="Arrêter le serveur MySQL" /><form></li>
 		</ul>
 	    </div>
 

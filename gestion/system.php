@@ -3,9 +3,9 @@
 // REBOOT DU SERVEUR WEB
 if ( (isset($_POST["srv-web"])) && ($_POST["reboot"]=='1') && (count($_POST) != 0) )
 {
-  $reboot = shell_exec("echo /etc/init.d/apache2 restart >> /var/www/gestion/script.sh");
-  $execution = shell_exec("/var/www/gestion/script.sh"); // On exécute le script précédemment rempli
-  $reset = shell_exec("echo '#!/bin/sh' > /var/www/gestion/script.sh"); // Remise à zéro du fichier / script pour effectuer de nouvelles commandes, sans avoir les commandes précédemment effectuées
+  $reboot = shell_exec("echo /etc/init.d/apache2 restart >> /srv/http/debian-srv/Gestweb/gestion/script.sh");
+  $execution = shell_exec("/srv/http/debian-srv/Gestweb/gestion/script.sh"); // On exécute le script précédemment rempli
+  $reset = shell_exec("echo '#!/bin/sh' > /srv/http/debian-srv/Gestweb/gestion/script.sh"); // Remise à zéro du fichier / script pour effectuer de nouvelles commandes, sans avoir les commandes précédemment effectuées
 ?>
 
 <html>
@@ -23,9 +23,9 @@ Redirection automatique dans une (1) minute...
 // EXTINCTION DU SERVEUR WEB
 else if ( (isset($_POST["srv-web"])) && ($_POST["halt"]=='1') && (count($_POST) != 0) )
 {
-  $halt = shell_exec("echo /etc/init.d/apache2 stop >> /var/www/gestion/script.sh");
-  $execution = shell_exec("/var/www/gestion/script.sh"); // On exécute le script précédemment rempli
-  $reset = shell_exec("echo '#!/bin/sh' > /var/www/gestion/script.sh"); // Remise à zéro du fichier / script pour effectuer de nouvelles commandes, sans avoir les commandes précédemment effectuées
+  $halt = shell_exec("echo /etc/init.d/apache2 stop >> /srv/http/debian-srv/Gestweb/gestion/script.sh");
+  $execution = shell_exec("/srv/http/debian-srv/Gestweb/gestion/script.sh"); // On exécute le script précédemment rempli
+  $reset = shell_exec("echo '#!/bin/sh' > /srv/http/debian-srv/Gestweb/gestion/script.sh"); // Remise à zéro du fichier / script pour effectuer de nouvelles commandes, sans avoir les commandes précédemment effectuées
 
 // Le serveur étant éteint, il n'est donc pas possible d'afficher un message...
 }
@@ -37,9 +37,9 @@ else if ( (isset($_POST["srv-web"])) && ($_POST["halt"]=='1') && (count($_POST) 
 // DEMARRAGE SERVEUR MYSQL
 else if ( (isset($_POST["srv-mysql"])) && ($_POST["start"]=='1') && (count($_POST) != 0) )
 {
-  $start = shell_exec("echo /etc/init.d/mysql start >> /var/www/gestion/script.sh");
-  $execution = shell_exec("/var/www/gestion/script.sh"); // On exécute le script précédemment rempli
-  $reset = shell_exec("echo '#!/bin/sh' > /var/www/gestion/script.sh"); // Remise à zéro du fichier / script pour effectuer de nouvelles commandes, sans avoir les commandes précédemment effectuées
+  $start = shell_exec("echo /etc/init.d/mysql start >> /srv/http/debian-srv/Gestweb/gestion/script.sh");
+  $execution = shell_exec("/srv/http/debian-srv/Gestweb/gestion/script.sh"); // On exécute le script précédemment rempli
+  $reset = shell_exec("echo '#!/bin/sh' > /srv/http/debian-srv/Gestweb/gestion/script.sh"); // Remise à zéro du fichier / script pour effectuer de nouvelles commandes, sans avoir les commandes précédemment effectuées
 ?>
 <html>
 <body>
@@ -56,9 +56,9 @@ Redirection automatique dans une (1) minute...
 // REDEMARRAGE SERVEUR MYSQL
 else if ( (isset($_POST["srv-mysql"])) && ($_POST["reboot"]=='1') && (count($_POST) != 0) )
 {
-  $start = shell_exec("echo /etc/init.d/mysql restart >> /var/www/gestion/script.sh");
-  $execution = shell_exec("/var/www/gestion/script.sh"); // On exécute le script précédemment rempli
-  $reset = shell_exec("echo '#!/bin/sh' > /var/www/gestion/script.sh"); // Remise à zéro du fichier / script pour effectuer de nouvelles commandes, sans avoir les commandes précédemment effectuées
+  $start = shell_exec("echo /etc/init.d/mysql restart >> /srv/http/debian-srv/Gestweb/gestion/script.sh");
+  $execution = shell_exec("/srv/http/debian-srv/Gestweb/gestion/script.sh"); // On exécute le script précédemment rempli
+  $reset = shell_exec("echo '#!/bin/sh' > /srv/http/debian-srv/Gestweb/gestion/script.sh"); // Remise à zéro du fichier / script pour effectuer de nouvelles commandes, sans avoir les commandes précédemment effectuées
 ?>
 <html>
 <body>
@@ -75,9 +75,9 @@ Redirection automatique dans une (1) minute...
 // DEMARRAGE SERVEUR MYSQL
 else if ( (isset($_POST["srv-mysql"])) && ($_POST["halt"]=='1') && (count($_POST) != 0) )
 {
-  $start = shell_exec("echo /etc/init.d/mysql stop >> /var/www/gestion/script.sh");
-  $execution = shell_exec("/var/www/gestion/script.sh"); // On exécute le script précédemment rempli
-  $reset = shell_exec("echo '#!/bin/sh' > /var/www/gestion/script.sh"); // Remise à zéro du fichier / script pour effectuer de nouvelles commandes, sans avoir les commandes précédemment effectuées
+  $start = shell_exec("echo /etc/init.d/mysql stop >> /srv/http/debian-srv/Gestweb/gestion/script.sh");
+  $execution = shell_exec("/srv/http/debian-srv/Gestweb/gestion/script.sh"); // On exécute le script précédemment rempli
+  $reset = shell_exec("echo '#!/bin/sh' > /srv/http/debian-srv/Gestweb/gestion/script.sh"); // Remise à zéro du fichier / script pour effectuer de nouvelles commandes, sans avoir les commandes précédemment effectuées
 ?>
 <html>
 <body>
