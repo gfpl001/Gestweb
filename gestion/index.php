@@ -18,9 +18,9 @@ if ( (count($_POST) != 0) )
   else if ( (isset($_POST["voir-fichier"])) && ($_POST["voir-fichier"] == 1) )
   { 
   echo "<fieldset align='center'>Vous affichez le fichier « <b>".$_POST["nom-fichier"]."</b> ».</fieldset>";
-  $fichier_affichage = shell_exec("echo cat ".$_POST["nom-fichier"]." >> /srv/http/debian-srv/Gestwebgestion/script.sh");
-  $affichage = shell_exec("/srv/http/debian-srv/Gestwebgestion/script.sh"); // On exécute le script précédemment rempli
-  $reset = shell_exec("echo '#!/bin/sh' > /srv/http/debian-srv/Gestwebgestion/script.sh"); // Remise à zéro du fichier / script pour effectuer de nouvelles commandes, sans avoir les commandes précédemment effectuées
+  $fichier_affichage = shell_exec("echo cat ".$dossier."/".$_POST["nom-fichier"]." >> /srv/http/debian-srv/Gestweb/gestion/script.sh");
+  $affichage = shell_exec("/srv/http/debian-srv/Gestweb/gestion/script.sh"); // On exécute le script précédemment rempli
+  $reset = shell_exec("echo '#!/bin/sh' > /srv/http/debian-srv/Gestweb/gestion/script.sh"); // Remise à zéro du fichier / script pour effectuer de nouvelles commandes, sans avoir les commandes précédemment effectuées
   }
 }
 else { echo "<fieldset align='center'>Vous êtes dans le dossier d'origine, soit « <b>/srv/http/debian-srv/Gestweb</b> »</fieldset>"; $affichage = shell_exec('ls -alh /srv/http/debian-srv/Gestweb'); } // Dossier web par défaut si aucun dossier sélectionné
@@ -44,48 +44,8 @@ else { echo "<fieldset align='center'>Vous êtes dans le dossier d'origine, soit
                         anc_onglet = name;
                 }
         //-->
-        </script>
-    <style type="text/css">
-        .onglet
-        {
-                display:inline-block;
-                margin-left:3px;
-                margin-right:3px;
-                padding:3px;
-                border:1px solid black;
-                cursor:pointer;
-        }
-        .onglet_0
-        {
-                background:#bbbbbb;
-                border-bottom:1px solid black;
-        }
-        .onglet_1
-        {
-                background:#dddddd;
-                border-bottom:0px solid black;
-                padding-bottom:4px;
-        }
-        .contenu_onglet
-        {
-                background-color:#dddddd;
-                border:1px solid black;
-                margin-top:-1px;
-                padding:5px;
-                display:none;
-        }
-        ul
-        {
-                margin-top:0px;
-                margin-bottom:0px;
-                margin-left:-10px
-        }
-        h1
-        {
-                margin:0px;
-                padding:0px;
-        }
-        </style>
+</script>
+<link rel="stylesheet" href="style.css">
 
 </head>
 
@@ -205,6 +165,8 @@ Emplacement du fichier : <input type="text" name="nom-dossier" size="40" value="
 			<li><form action="system.php" method="POST"> <input type="hidden" name="reboot-mysql" value="1" /> <input type="hidden" name="srv-mysql" value="1" /> <input type="submit" style="background-color: #FFCC33; color: #000000" value="Redémarrer le serveur MySQL" /><form></li>
 			<li><form action="system.php" method="POST"> <input type="hidden" name="halt-mysql" value="1" /> <input type="hidden" name="srv-mysql" value="1" /> <input type="submit" style="background-color: #CC0000; color: #ffffff" value="Arrêter le serveur MySQL" /><form></li>
 		</ul>
+<hr />
+<a href="modif_phpini.php">Afficher & Modifier le fichier 'php.ini'</a>
 	    </div>
 
         </div>

@@ -1,9 +1,9 @@
 <?php // -- Script par IDEALOGEEK --
 
 // REBOOT DU SERVEUR WEB
-if ( (isset($_POST["srv-web"])) && ($_POST["reboot"]=='1') && (count($_POST) != 0) )
+if ( (isset($_POST["srv-web"])) && ($_POST["reboot-www"]=='1') && (count($_POST) != 0) )
 {
-  $reboot = shell_exec("echo /etc/init.d/apache2 restart >> /srv/http/debian-srv/Gestweb/gestion/script.sh");
+  $reboot = shell_exec("echo systemctl restart httpd.service >> /srv/http/debian-srv/Gestweb/gestion/script.sh");
   $execution = shell_exec("/srv/http/debian-srv/Gestweb/gestion/script.sh"); // On exécute le script précédemment rempli
   $reset = shell_exec("echo '#!/bin/sh' > /srv/http/debian-srv/Gestweb/gestion/script.sh"); // Remise à zéro du fichier / script pour effectuer de nouvelles commandes, sans avoir les commandes précédemment effectuées
 ?>
@@ -21,9 +21,9 @@ Redirection automatique dans une (1) minute...
 } 
 
 // EXTINCTION DU SERVEUR WEB
-else if ( (isset($_POST["srv-web"])) && ($_POST["halt"]=='1') && (count($_POST) != 0) )
+else if ( (isset($_POST["srv-web"])) && ($_POST["halt-www"]=='1') && (count($_POST) != 0) )
 {
-  $halt = shell_exec("echo /etc/init.d/apache2 stop >> /srv/http/debian-srv/Gestweb/gestion/script.sh");
+  $halt = shell_exec("echo systemctl stop httpd.service >> /srv/http/debian-srv/Gestweb/gestion/script.sh");
   $execution = shell_exec("/srv/http/debian-srv/Gestweb/gestion/script.sh"); // On exécute le script précédemment rempli
   $reset = shell_exec("echo '#!/bin/sh' > /srv/http/debian-srv/Gestweb/gestion/script.sh"); // Remise à zéro du fichier / script pour effectuer de nouvelles commandes, sans avoir les commandes précédemment effectuées
 
@@ -35,9 +35,9 @@ else if ( (isset($_POST["srv-web"])) && ($_POST["halt"]=='1') && (count($_POST) 
 
 
 // DEMARRAGE SERVEUR MYSQL
-else if ( (isset($_POST["srv-mysql"])) && ($_POST["start"]=='1') && (count($_POST) != 0) )
+else if ( (isset($_POST["srv-mysql"])) && ($_POST["start-mysql"]=='1') && (count($_POST) != 0) )
 {
-  $start = shell_exec("echo /etc/init.d/mysql start >> /srv/http/debian-srv/Gestweb/gestion/script.sh");
+  $start = shell_exec("echo systemctl start mysqld >> /srv/http/debian-srv/Gestweb/gestion/script.sh");
   $execution = shell_exec("/srv/http/debian-srv/Gestweb/gestion/script.sh"); // On exécute le script précédemment rempli
   $reset = shell_exec("echo '#!/bin/sh' > /srv/http/debian-srv/Gestweb/gestion/script.sh"); // Remise à zéro du fichier / script pour effectuer de nouvelles commandes, sans avoir les commandes précédemment effectuées
 ?>
@@ -54,9 +54,9 @@ Redirection automatique dans une (1) minute...
 } 
 
 // REDEMARRAGE SERVEUR MYSQL
-else if ( (isset($_POST["srv-mysql"])) && ($_POST["reboot"]=='1') && (count($_POST) != 0) )
+else if ( (isset($_POST["srv-mysql"])) && ($_POST["reboot-mysql"]=='1') && (count($_POST) != 0) )
 {
-  $start = shell_exec("echo /etc/init.d/mysql restart >> /srv/http/debian-srv/Gestweb/gestion/script.sh");
+  $start = shell_exec("echo systemctl restart mysqld.service >> /srv/http/debian-srv/Gestweb/gestion/script.sh");
   $execution = shell_exec("/srv/http/debian-srv/Gestweb/gestion/script.sh"); // On exécute le script précédemment rempli
   $reset = shell_exec("echo '#!/bin/sh' > /srv/http/debian-srv/Gestweb/gestion/script.sh"); // Remise à zéro du fichier / script pour effectuer de nouvelles commandes, sans avoir les commandes précédemment effectuées
 ?>
@@ -73,9 +73,9 @@ Redirection automatique dans une (1) minute...
 } 
 
 // DEMARRAGE SERVEUR MYSQL
-else if ( (isset($_POST["srv-mysql"])) && ($_POST["halt"]=='1') && (count($_POST) != 0) )
+else if ( (isset($_POST["srv-mysql"])) && ($_POST["halt-mysql"]=='1') && (count($_POST) != 0) )
 {
-  $start = shell_exec("echo /etc/init.d/mysql stop >> /srv/http/debian-srv/Gestweb/gestion/script.sh");
+  $start = shell_exec("echo systemctl stop mysqld.service >> /srv/http/debian-srv/Gestweb/gestion/script.sh");
   $execution = shell_exec("/srv/http/debian-srv/Gestweb/gestion/script.sh"); // On exécute le script précédemment rempli
   $reset = shell_exec("echo '#!/bin/sh' > /srv/http/debian-srv/Gestweb/gestion/script.sh"); // Remise à zéro du fichier / script pour effectuer de nouvelles commandes, sans avoir les commandes précédemment effectuées
 ?>
