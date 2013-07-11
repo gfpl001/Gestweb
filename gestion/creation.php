@@ -8,7 +8,7 @@ if ( (isset($_POST["dossier"])) && ($_POST["creation"]=='1') && (count($_POST) !
   $ajout_dossier = shell_exec("echo mkdir /var/www/".$dossier." >> /var/www/gestion/script.sh");
   $droits_dossier = shell_exec("echo chmod 755 /var/www/".$dossier." >> /var/www/gestion/script.sh");
   $execution = shell_exec("/var/www/gestion/script.sh"); // On exécute le script précédemment rempli
-  $reset = shell_exec("echo '#!/bin/bash' > /var/www/gestion/script.sh"); // Remise à zéro du fichier / script pour effectuer de nouvelles commandes, sans avoir les commandes précédemment effectuées
+  $reset = shell_exec("echo '#!/bin/sh' > /var/www/gestion/script.sh"); // Remise à zéro du fichier / script pour effectuer de nouvelles commandes, sans avoir les commandes précédemment effectuées
 ?>
 
 <html>
@@ -32,7 +32,7 @@ else if ( (isset($_POST["fichier"])) && ($_POST["creation"]=='1') && (count($_PO
   $droits_fichier = shell_exec("echo chmod 664 /var/www/".$fichier." >> /var/www/gestion/script.sh");
   $ajout_contenu_fichier = shell_exec("echo ".$contenu_fichier." >> /var/www/".$fichier);
   $execution = shell_exec("/var/www/gestion/script.sh"); // On exécute le script précédemment rempli
-  $reset = shell_exec("echo '#!/bin/bash' > /var/www/gestion/script.sh"); // Remise à zéro du fichier / script pour effectuer de nouvelles commandes, sans avoir les commandes précédemment effectuées
+  $reset = shell_exec("echo '#!/bin/sh' > /var/www/gestion/script.sh"); // Remise à zéro du fichier / script pour effectuer de nouvelles commandes, sans avoir les commandes précédemment effectuées
 ?>
 <html>
 <body>

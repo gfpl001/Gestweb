@@ -10,15 +10,15 @@ if ( (count($_POST) != 0) )
 
   if ( (isset($_POST["move"])) && ($_POST["move"] == 1) ) // Si le POST[move] existe et qu'il est égal à 1
   { 
-   $deplacement = shell_exec("cd ".$dossier); // On se déplace dans le dossier (variable précédemment récupérée)
+   $deplacement = shell_exec("cd /var/www/".$dossier); // On se déplace dans le dossier (variable précédemment récupérée)
    echo "<fieldset align='center'>Vous êtes dans le dossier « <b>".$dossier."</b> ».</fieldset>"; // Affichage "tête haute" tout en haut de la page web
-   $affichage = shell_exec('ls -alh '.$dossier); // Exécution de l'affichage du dossier choisi (variable précédemment récupérée)
+   $affichage = shell_exec('ls -alh /var/www/'.$dossier); // Exécution de l'affichage du dossier choisi (variable précédemment récupérée)
   } 
 
   else if ( (isset($_POST["liste"])) && ($_POST["liste"] == 1) )
   { 
   echo "<fieldset align='center'>Vous affichez le contenu du dossier « <b>".$dossier."</b> ».</fieldset>";
-  $affichage = shell_exec('ls -h '.$dossier);
+  $affichage = shell_exec('ls -alh /var/www/'.$dossier);
   }
 
   else if ( (isset($_POST["voir-fichier"])) && ($_POST["voir-fichier"] == 1) )
@@ -26,7 +26,7 @@ if ( (count($_POST) != 0) )
   echo "<fieldset align='center'>Vous affichez le fichier « <b>".$_POST["nom-fichier"]."</b> ».</fieldset>";
   $fichier_affichage = shell_exec("echo cat ".$_POST["nom-fichier"]." >> /var/www/gestion/script.sh");
   $affichage = shell_exec("/var/www/gestion/script.sh"); // On exécute le script précédemment rempli
-  $reset = shell_exec("echo '#!/bin/bash' > /var/www/gestion/script.sh"); // Remise à zéro du fichier / script pour effectuer de nouvelles commandes, sans avoir les commandes précédemment effectuées
+  $reset = shell_exec("echo '#!/bin/sh' > /var/www/gestion/script.sh"); // Remise à zéro du fichier / script pour effectuer de nouvelles commandes, sans avoir les commandes précédemment effectuées
   }
 }
 else { echo "<fieldset align='center'>Vous êtes dans le dossier d'origine, soit « <b>/var/www/</b> »</fieldset>"; $affichage = shell_exec('ls -alh /var/www/'); } // Dossier web par défaut si aucun dossier sélectionné
@@ -96,17 +96,18 @@ else { echo "<fieldset align='center'>Vous êtes dans le dossier d'origine, soit
 </head>
 
 <body>
-<br /><h1>Administration du serveur web « Apache2 »</h1>
+<br /><center><h1>Administration du serveur web « Apache2 »</h1></center>
 <br />
 
 <table><td>
 <!-- Liste des dossiers -->
 <fieldset><legend><h2>Liste des fichiers & dossiers</h2></legend>
 	<fieldset align="justify"><pre><?php echo $affichage; ?></pre></fieldset><hr />
+	
 	<form action="#" method="POST">
-		<input type="hidden" name="liste" value="1" />
-	<!-- Choix d'un dossier à lister -->
-		Nom du <b>dossier à afficher</b> : <input type="text" name="nom-dossier" value="<?php if (isset($_POST['nom-dossier'])) { echo $_POST['nom-dossier']; } else { echo '/var/www/'; } ?>" /> <input type="submit" name="Voir le dossier" value="Voir le dossier" />
+		<input type="hidden" name="move" value="1" />
+	<!-- Choix d'un dossier dans lequel il faut se déplacer -->
+		<b>Se déplacer</b> dans un dossier : <input type="text" name="nom-dossier" value="<?php if (isset($_POST['nom-dossier'])) { echo $_POST['nom-dossier']; } else { echo '/var/www/'; } ?>" /> <input type="submit" name="Se déplacer" value="Se déplacer" />
 	</form>
 
 	<form action="#" method="POST">
@@ -115,34 +116,25 @@ else { echo "<fieldset align='center'>Vous êtes dans le dossier d'origine, soit
 		<b><u>Contenu du fichier</u> à afficher</b> : <input type="text" name="nom-fichier" value="<?php if (isset($_POST['nom-dossier'])) { echo $_POST['nom-dossier']; } else { echo '/var/www/'; } ?>" /> <input type="submit" name="Voir le fichier" value="Voir le fichier" />
 	</form>
 
-	<form action="#" method="POST">
-		<input type="hidden" name="move" value="1" />
-	<!-- Choix d'un dossier dans lequel il faut se déplacer -->
-		<b>Se déplacer</b> dans un dossier : <input type="text" name="nom-dossier" value="<?php if (isset($_POST['nom-dossier'])) { echo $_POST['nom-dossier']; } else { echo '/var/www/'; } ?>" /> <input type="submit" name="Se déplacer" value="Se déplacer" />
-	</form></td>
+<fieldset><legend><h3>Envoi d'un fichier</h3></legend>
+	<form action="upload.php" method="POST" enctype="multipart/form-data">
+	Fichier à envoyer : <input type="file" name="fichiers" /><br />
+	<input type="submit" name="envoyer" value="Envoyer le fichier" />
+	</form>
+</fieldset>
+
+	</td>
 
 
 <td>
 
 <div class="systeme_onglets">
         <div class="onglets">
-	    <span class="onglet_0 onglet" id="onglet_serveur" onclick="javascript:change_onglet('serveur');">Gestion du serveur</span>
             <span class="onglet_0 onglet" id="onglet_dossiers" onclick="javascript:change_onglet('dossiers');">Gestion dossiers</span>
             <span class="onglet_0 onglet" id="onglet_fichiers" onclick="javascript:change_onglet('fichiers');">Gestion fichiers</span>
+            <span class="onglet_0 onglet" id="onglet_serveur" onclick="javascript:change_onglet('serveur');">Gestion du serveur</span>
         </div>
         <div class="contenu_onglets">
-            <div class="contenu_onglet" id="contenu_onglet_serveur">
-		<ul>
-<center><h3>Serveur WEB</h3></center>
-			<li><form action="system.php" method="POST"> <input type="hidden" name="reboot" value="1" /> <input type="hidden" name="srv-web" value="1" /> <input type="submit" name="Redémarrer" style="background-color: #FFCC33; color: #000000" value="Redémarrer le serveur web" /><form></li>
-			<li><form action="system.php" method="POST"> <input type="hidden" name="halt" value="1" /> <input type="hidden" name="srv-web" value="1" /> <input type="submit" name="Arrêt" style="background-color: #CC0000; color: #ffffff" value="Arrêter le serveur web" /><form></li>
-<br /><center><h3>Serveur MySQL</h3></center>
-			<li><form action="system.php" method="POST"> <input type="hidden" name="start" value="1" /> <input type="hidden" name="srv-mysql" value="1" /> <input type="submit" name="Arrêt" style="background-color: #33CC00; color: #ffffff" value="Démarrer le serveur MySQL" /><form></li>
-			<li><form action="system.php" method="POST"> <input type="hidden" name="reboot" value="1" /> <input type="hidden" name="srv-mysql" value="1" /> <input type="submit" name="Arrêt" style="background-color: #FFCC33; color: #000000" value="Redémarrer le serveur MySQL" /><form></li>
-			<li><form action="system.php" method="POST"> <input type="hidden" name="halt" value="1" /> <input type="hidden" name="srv-mysql" value="1" /> <input type="submit" name="Arrêt" style="background-color: #CC0000; color: #ffffff" value="Arrêter le serveur MySQL" /><form></li>
-		</ul>
-	    </div>
-
             <div class="contenu_onglet" id="contenu_onglet_dossiers">
                 <h1>Gestion des dossiers</h1>
 		<form action="creation.php" method="POST">
@@ -188,13 +180,6 @@ else { echo "<fieldset align='center'>Vous êtes dans le dossier d'origine, soit
 			</fieldset>
 		</form>
 
-<fieldset><legend><h3>Envoi de fichiers</h3></legend>
-<form action="upload.php" method="POST" enctype="multipart/form-data">
-Fichier à envoyer : <input type="file" name="fichiers" /><br />
-<input type="submit" name="envoyer" value="Envoyer le fichier" />
-</form>
-</fieldset>
-
 		<form action="delete.php" method="POST">
 		<input type="hidden" name="delete" value="1" /> <input type="hidden" name="fichier" value="1" /> 
 		<!-- Suppression d'un dossier -->
@@ -212,6 +197,19 @@ Fichier à envoyer : <input type="file" name="fichiers" /><br />
 			</fieldset>
 		</form>
             </div>
+
+	    <div class="contenu_onglet" id="contenu_onglet_serveur">
+		<ul>
+<center><h3>Serveur WEB</h3></center>
+			<li><form action="system.php" method="POST"> <input type="hidden" name="reboot" value="1" /> <input type="hidden" name="srv-web" value="1" /> <input type="submit" style="background-color: #FFCC33; color: #000000" value="Redémarrer le serveur web" /><form></li>
+			<li><form action="system.php" method="POST"> <input type="hidden" name="halt" value="1" /> <input type="hidden" name="srv-web" value="1" /> <input type="submit" style="background-color: #CC0000; color: #ffffff" value="Arrêter le serveur web" /><form></li>
+<br /><center><h3>Serveur MySQL</h3></center>
+			<li><form action="system.php" method="POST"> <input type="hidden" name="start" value="1" /> <input type="hidden" name="srv-mysql" value="1" /> <input type="submit" style="background-color: #33CC00; color: #ffffff" value="Démarrer le serveur MySQL" /><form></li>
+			<li><form action="system.php" method="POST"> <input type="hidden" name="reboot" value="1" /> <input type="hidden" name="srv-mysql" value="1" /> <input type="submit" style="background-color: #FFCC33; color: #000000" value="Redémarrer le serveur MySQL" /><form></li>
+			<li><form action="system.php" method="POST"> <input type="hidden" name="halt" value="1" /> <input type="hidden" name="srv-mysql" value="1" /> <input type="submit" style="background-color: #CC0000; color: #ffffff" value="Arrêter le serveur MySQL" /><form></li>
+		</ul>
+	    </div>
+
         </div>
     </div>
     <script type="text/javascript">

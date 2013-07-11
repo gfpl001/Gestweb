@@ -6,7 +6,7 @@ if ( (isset($_POST["dossier"])) && ($_POST["renommage"]=='1') && (count($_POST) 
   $ancien_dossier = addslashes($_POST["nom-dossier-origine"]); $nouveau_dossier = addslashes($_POST["nouveau-nom-dossier"]); // Récupération des variables
   $delete = shell_exec("echo mv /var/www/".$ancien_dossier." /var/www/".$nouveau_dossier." >> '/var/www/gestion/script.sh'"); // On bouge l'ancien dossier (connu par la variable $ancien_dossier) en temps que $nouveau_dossier -> les modifs sont saisies dans le script.sh, permettant de lancer les commandes dans le serveur
   $execution = shell_exec("/var/www/gestion/script.sh"); // On exécute le script précédemment rempli
-  $reset = shell_exec("echo '#!/bin/bash' > /var/www/gestion/script.sh"); // Remise à zéro du fichier / script pour effectuer de nouvelles commandes, sans avoir les commandes précédemment effectuées
+  $reset = shell_exec("echo '#!/bin/sh' > /var/www/gestion/script.sh"); // Remise à zéro du fichier / script pour effectuer de nouvelles commandes, sans avoir les commandes précédemment effectuées
 ?>
 <html>
 <body>
@@ -24,7 +24,7 @@ else if ( (isset($_POST["fichier"])) && ($_POST["renommage"]=='1') && (count($_P
   $ancien_fichier = htmlspecialchars($_POST["nom-fichier-origine"]); $nouveau_fichier = htmlspecialchars($_POST["nouveau-nom-fichier"]);
   $delete = shell_exec("echo mv /var/www/".$ancien_fichier." /var/www/".$nouveau_fichier." >> '/var/www/gestion/script.sh'");
   $execution = shell_exec("/var/www/gestion/script.sh"); // On exécute le script précédemment rempli
-  $reset = shell_exec("echo '#!/bin/bash' > /var/www/gestion/script.sh"); // Remise à zéro du fichier / script pour effectuer de nouvelles commandes, sans avoir les commandes précédemment effectuées
+  $reset = shell_exec("echo '#!/bin/sh' > /var/www/gestion/script.sh"); // Remise à zéro du fichier / script pour effectuer de nouvelles commandes, sans avoir les commandes précédemment effectuées
 ?>
 <html>
 <body>
