@@ -1,5 +1,5 @@
 <?php // -- Script par IDEALOGEEK --
-  $fichier_affichage = shell_exec("echo cat /etc/php/php.ini >> /srv/http/debian-srv/Gestweb/gestion/script.sh");
+  $fichier_affichage = shell_exec("echo cat /etc/php5/php.ini >> /srv/http/debian-srv/Gestweb/gestion/script.sh");
   $affichage = shell_exec("/srv/http/debian-srv/Gestweb/gestion/script.sh"); // On exécute le script précédemment rempli
   $reset = shell_exec("echo '#!/bin/sh' > /srv/http/debian-srv/Gestweb/gestion/script.sh"); // Remise à zéro du fichier / script pour effectuer de nouvelles commandes, sans avoir les commandes précédemment effectuées
 ?>

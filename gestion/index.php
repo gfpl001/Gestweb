@@ -114,7 +114,7 @@ else { echo "<fieldset align='center'>Vous êtes dans le dossier d'origine, soit
 		<input type="hidden" name="renommage" value="1" /> <input type="hidden" name="dossier" value="1" /> <input type="hidden" name="emplacement" value="<?php if (isset($dossier)) { echo $dossier; } else { echo '/srv/http/debian-srv/Gestweb/'; } ?>" />
 		<!-- Renommer d'un dossier -->
 			<fieldset><legend><h2>Renommage d'un dossier</h2></legend>
-			Nom du dossier à renommer : <input type="text" name="nom-dossier-origine" /> <hr />
+			Nom du dossier à renommer : <input type="text" name="nom-dossier-origine" /> <br />
 			Nouveau nom du dossier : <input type="text" name="nouveau-nom-dossier" /> 
 <input type="submit" name="Renommer le dossier" value="Renommer le dossier" />
 			</fieldset>
@@ -131,7 +131,7 @@ else { echo "<fieldset align='center'>Vous êtes dans le dossier d'origine, soit
 
 Emplacement du fichier : <input type="text" name="nom-dossier" size="40" value="<?php if (isset($dossier)) { echo $dossier; } else { echo '/srv/http/debian-srv/Gestweb/'; } ?>" /><br />
 
-			Contenu du fichier : <textarea name="contenu-fichier" rows="6" cols="25"> </textarea> <br />
+			Contenu du fichier : <textarea name="contenu-fichier" rows="6" cols="25"></textarea> <br />
 		<center><input type="submit" name="Créer le fichier" value="Créer le fichier" /></center>
 	
 			</fieldset>
@@ -149,25 +149,28 @@ Emplacement du fichier : <input type="text" name="nom-dossier" size="40" value="
 		<input type="hidden" name="renommage" value="1" /> <input type="hidden" name="fichier" value="1" /> <input type="hidden" name="emplacement" value="<?php if (isset($dossier)) { echo $dossier; } else { echo '/srv/http/debian-srv/Gestweb/'; } ?>" />
 		<!-- Renommer d'un dossier -->
 			<fieldset><legend><h2>Renommage d'un fichier</h2></legend>
-			Nom du fichier à renommer : <input type="text" name="nom-fichier-origine" /> <hr />
+			Nom du fichier à renommer : <input type="text" name="nom-fichier-origine" /> <br />
 			Nouveau nom du fichier : <input type="text" name="nouveau-nom-fichier" /> <input type="submit" name="Renommer le fichier" value="Renommer le fichier" />
 			</fieldset>
 		</form>
             </div>
 
-	    <div class="contenu_onglet" id="contenu_onglet_serveur">
-		<ul>
-<center><h3>Serveur WEB</h3></center>
-			<li><form action="system.php" method="POST"> <input type="hidden" name="reboot-www" value="1" /> <input type="hidden" name="srv-web" value="1" /> <input type="submit" style="background-color: #FFCC33; color: #000000" value="Redémarrer le serveur web" /><form></li>
-			<li><form action="system.php" method="POST"> <input type="hidden" name="halt-www" value="1" /> <input type="hidden" name="srv-web" value="1" /> <input type="submit" style="background-color: #CC0000; color: #ffffff" value="Arrêter le serveur web" /><form></li>
-<br /><hr /><center><h3>Serveur MySQL</h3></center>
-			<li><form action="system.php" method="POST"> <input type="hidden" name="start-mysql" value="1" /> <input type="hidden" name="srv-mysql" value="1" /> <input type="submit" style="background-color: #33CC00; color: #ffffff" value="Démarrer le serveur MySQL" /><form></li>
-			<li><form action="system.php" method="POST"> <input type="hidden" name="reboot-mysql" value="1" /> <input type="hidden" name="srv-mysql" value="1" /> <input type="submit" style="background-color: #FFCC33; color: #000000" value="Redémarrer le serveur MySQL" /><form></li>
-			<li><form action="system.php" method="POST"> <input type="hidden" name="halt-mysql" value="1" /> <input type="hidden" name="srv-mysql" value="1" /> <input type="submit" style="background-color: #CC0000; color: #ffffff" value="Arrêter le serveur MySQL" /><form></li>
+	    <div class="contenu_onglet" id="contenu_onglet_serveur"><center>
+<h3>Serveur WEB</h3>
+		<ul style="list-style:none; margin: 5 0; padding: 5 0;">
+			<li><form action="system.php" method="POST"> <input type="hidden" name="reboot-www" value="1" /> <input type="hidden" name="srv-web" value="1" /> <input type="submit" style="background-color: #FFCC33; color: #000000" value="Redémarrer le serveur web" /><form> <form action="system.php" method="POST"> <input type="hidden" name="halt-www" value="1" /> <input type="hidden" name="srv-web" value="1" /> <input type="submit" style="background-color: #CC0000; color: #ffffff" value="Arrêter le serveur web" /><form></li>
 		</ul>
+<hr /><h3>Serveur MySQL</h3>
+	<ul style="list-style:none; margin: 5 0; padding: 5 0;">
+		<li><form action="system.php" method="POST"> <input type="hidden" name="start-mysql" value="1" /> <input type="hidden" name="srv-mysql" value="1" /> <input type="submit" style="background-color: #33CC00; color: #ffffff" value="Démarrer le serveur MySQL" /><form> <form action="system.php" method="POST"> <input type="hidden" name="reboot-mysql" value="1" /> <input type="hidden" name="srv-mysql" value="1" /> <input type="submit" style="background-color: #FFCC33; color: #000000" value="Redémarrer le serveur MySQL" /><form></li>
+		<li><form action="system.php" method="POST"> <input type="hidden" name="halt-mysql" value="1" /> <input type="hidden" name="srv-mysql" value="1" /> <input type="submit" style="background-color: #CC0000; color: #ffffff" value="Arrêter le serveur MySQL" /><form></li>
 <hr />
-<a href="modif_phpini.php">Afficher & Modifier le fichier 'php.ini'</a>
-	    </div>
+<h3>Fonctionnalités supplémentaires</h3>
+	<ul style="list-style:none;">
+		<li><a href="modif_phpini.php">Afficher & Modifier le fichier 'php.ini'</a></li>
+		<li><a href="modif_apacheconf.php">Afficher & Modifier le fichier 'apache2.conf'</a></li>
+	</ul>
+	    </center></div>
 
         </div>
     </div>
