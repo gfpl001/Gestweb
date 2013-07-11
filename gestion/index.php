@@ -10,15 +10,9 @@ if ( (count($_POST) != 0) )
 
   if ( (isset($_POST["move"])) && ($_POST["move"] == 1) ) // Si le POST[move] existe et qu'il est égal à 1
   { 
-   $deplacement = shell_exec("cd /var/www/".$dossier); // On se déplace dans le dossier (variable précédemment récupérée)
+   $deplacement = shell_exec("cd ".$dossier); // On se déplace dans le dossier (variable précédemment récupérée)
    echo "<fieldset align='center'>Vous êtes dans le dossier « <b>".$dossier."</b> ».</fieldset>"; // Affichage "tête haute" tout en haut de la page web
-   $affichage = shell_exec('ls -alh /var/www/'.$dossier); // Exécution de l'affichage du dossier choisi (variable précédemment récupérée)
-  } 
-
-  else if ( (isset($_POST["liste"])) && ($_POST["liste"] == 1) )
-  { 
-  echo "<fieldset align='center'>Vous affichez le contenu du dossier « <b>".$dossier."</b> ».</fieldset>";
-  $affichage = shell_exec('ls -alh /var/www/'.$dossier);
+   $affichage = shell_exec('ls -alh '.$dossier); // Exécution de l'affichage du dossier choisi (variable précédemment récupérée)
   }
 
   else if ( (isset($_POST["voir-fichier"])) && ($_POST["voir-fichier"] == 1) )
