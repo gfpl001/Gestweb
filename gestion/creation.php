@@ -1,25 +1,57 @@
+<html>
+<body>
 ﻿<?php // -- Script par IDEALOGEEK --
 
 // CREATION D'UN DOSSIER
+
+/*
+@ Clean Car
+*/
+function clean_car($data){
+$data=(htmlspecialchars($data));
+return $data;
+}
+
+/*
+@ Secure name folder
+*/
+function secure_name($name) {
+    $except = array('\\', '/', ':', '*', '?', '"', '<', '>', '|');
+    return str_replace($except, '', $name);
+} 
+
+/*
+@ Created Dir
+*/
+function MakeDirectory($dir, $mode)
+{
+
+  if (is_dir($dir) || @mkdir($dir,$mode)) return TRUE; //file created and or exist
+  if (!MakeDirectory(dirname($dir),$mode)) return FALSE; // return false Error 
+  return @mkdir($dir,$mode);
+}
+
+
 if ( (isset($_POST["dossier"])) && ($_POST["creation"]=='1') && (count($_POST) != 0) ) // Si le POST[dossier] existe, que le POST[creation] est égal à 1 et que les POST ne sont pas vides...
 {
-  $dossier_creation = htmlspecialchars($_POST["nom-nouveau-dossier"]);
-  $emplacement = htmlspecialchars($_POST["emplacement"]);
-
-  $ajout_dossier = shell_exec("echo mkdir ".$emplacement."/".$dossier_creation." >> /var/www/gestion/script.sh");
-  $droits_dossier = shell_exec("echo chmod 755 ".$emplacement."/".$dossier_creation." >> /var/www/gestion/script.sh");
-  $execution = shell_exec("/var/www/gestion/script.sh"); // On exécute le script précédemment rempli
-  $reset = shell_exec("echo '#!/bin/sh' > /var/www/gestion/script.sh"); // Remise à zéro du fichier / script pour effectuer de nouvelles commandes, sans avoir les commandes précédemment effectuées
+	
+	if((!empty($dossier_creation))&&(!empty($emplacement))){ //check empty name or not
+	
+	secure_name(	$dossier_creation = htmlspecialchars($_POST["nom-nouveau-dossier"]));
+  	secure_name(	$emplacement = htmlspecialchars($_POST["emplacement"]));
+	
+	MakeDirectory($emplacement."/".$dossier_creation,'755'); //755 or 0755
+	}else{ echo 'ERROR EMPTY NAME '; exit; // must change to check if folder has ben created 
+	};
+  
 ?>
 
-<html>
-<body>
+
 	<h1>Création d'un dossier... Réussite !</h1>
 Le dossier <b>« <?php echo $dossier_creation; ?> »</b> a été créé avec succès ! <br />
 Redirection automatique dans deux (2) secondes...
 <meta http-equiv="Refresh" content="2;url=index.php">
-</body>
-</html>
+
 
 <?php
 }
@@ -36,13 +68,12 @@ else if ( (isset($_POST["fichier"])) && ($_POST["creation"]=='1') && (count($_PO
   $execution = shell_exec("/var/www/gestion/script.sh"); // On exécute le script précédemment rempli
   $reset = shell_exec("echo '#!/bin/sh' > /var/www/gestion/script.sh"); // Remise à zéro du fichier / script pour effectuer de nouvelles commandes, sans avoir les commandes précédemment effectuées
 ?>
-<html>
-<body>
+
 	<h1>Création d'un fichier... Réussite !</h1>
 Le fichier <b>« <?php echo $fichier; ?> »</b> a été créé avec succès ! <br />
 Redirection automatique dans deux (2) secondes...
 <meta http-equiv="Refresh" content="2;url=index.php">
+
+<?php } ?>
 </body>
 </html>
-<?php
-} ?>
