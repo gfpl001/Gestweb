@@ -35,10 +35,12 @@ function MakeDirectory($dir, $mode)
 if ( (isset($_POST["dossier"])) && ($_POST["creation"]=='1') && (count($_POST) != 0) ) // Si le POST[dossier] existe, que le POST[creation] est égal à 1 et que les POST ne sont pas vides...
 {
 	
-	if((!empty($dossier_creation))&&(!empty($emplacement))){ //check empty name or not
-	
 	secure_name(	$dossier_creation = htmlspecialchars($_POST["nom-nouveau-dossier"]));
   	secure_name(	$emplacement = htmlspecialchars($_POST["emplacement"]));
+  	
+	if((!empty($dossier_creation))&&(!empty($emplacement))){ //check empty name or not
+	
+	
 	
 	MakeDirectory($emplacement."/".$dossier_creation,'755'); //755 or 0755
 	}else{ echo 'ERROR EMPTY NAME '; exit; // must change to check if folder has ben created 
